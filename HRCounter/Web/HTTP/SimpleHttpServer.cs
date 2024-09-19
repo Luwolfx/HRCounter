@@ -13,7 +13,6 @@ namespace HRCounter.Web.HTTP
 {
     internal class SimpleHttpServer: IInitializable, IDisposable
     {
-        internal const string PREFIX = "http://localhost:65302/";  // TODO: make it configurable?
         
         private readonly PluginConfig _config;
         private readonly SiraLog _logger;
@@ -22,14 +21,26 @@ namespace HRCounter.Web.HTTP
          * Path -> Method -> Handler
          */
         private readonly IReadOnlyDictionary<string, IReadOnlyDictionary<HttpMethod, IHttpRouteHandler>> _handlers;
+
+        private readonly IPAddress _address;
+        private readonly int _port;
         
         private bool _isListening = false;
+        
+        public IPAddress Address => _address;
+        public int Port => _port;
+        public static string BaseUrl { get; private set; } = "";
+        
         
         internal SimpleHttpServer(PluginConfig config, SiraLog logger, IHttpRouteHandler[] handlers)
         {
             _config = config;
             _logger = logger;
-            _listener.Prefixes.Add(PREFIX);
+            _address = config.HttpBindIP;
+            _port = config.HttpPort;
+            var url =  $"http://{Address}:{Port}/";
+            BaseUrl = url;
+            _listener.Prefixes.Add(url);
             
             var handlersDict = new Dictionary<string, Dictionary<HttpMethod, IHttpRouteHandler>>();
             foreach (var handler in handlers)

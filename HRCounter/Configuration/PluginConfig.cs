@@ -55,6 +55,9 @@ namespace HRCounter.Configuration
         private List<string> _oscAddress =
             ["/hr", "/avatar/parameters/HR", "/avatar/parameters/HeartRateInt", "/avatar/parameters/Heartrate3", "/avatar/parameters/HeartRateBPM"];
         
+        private IPAddress _httpBindIp = IPAddress.Loopback;
+        private int _httpPort = 65302;
+        
         private string _customIcon = "";
 
         #endregion
@@ -240,6 +243,20 @@ namespace HRCounter.Configuration
                 _oscAddress = value;
             }
         }
+                
+        [JsonConverter(typeof(WrappedTextValueJsonConverter<IPAddress, IPAddressValueConverter>))]
+        [UseConverter(typeof(IPAddressValueConverter))]
+        public virtual IPAddress HttpBindIP
+        {
+            get => _httpBindIp;
+            set => _httpBindIp = value;
+        }
+
+        public virtual int HttpPort
+        {
+            get => _httpPort;
+            set => _httpPort = value;
+        }
         
         public virtual string CustomIcon
         {
@@ -310,6 +327,8 @@ namespace HRCounter.Configuration
                 _oscBindIp = _oscBindIp,
                 _oscPort = _oscPort,
                 _oscAddress = _oscAddress,
+                _httpBindIp = _httpBindIp,
+                _httpPort = _httpPort,
                 _customIcon = _customIcon
             };
         }
@@ -343,6 +362,8 @@ namespace HRCounter.Configuration
             _oscBindIp = other._oscBindIp;
             _oscPort = other._oscPort;
             _oscAddress = other._oscAddress;
+            _httpBindIp = other._httpBindIp;
+            _httpPort = other._httpPort;
             _customIcon = other._customIcon;
             Changed();
         }
