@@ -1,6 +1,6 @@
 ﻿using System;
-using YUR.Fit.Core.Models;
-using YUR.Fit.Unity;
+//using YUR.Fit.Core.Models;
+//using YUR.Fit.Unity;
 
 namespace HRCounter.Data.DataSources
 {
@@ -8,10 +8,10 @@ namespace HRCounter.Data.DataSources
     {
         protected override void Start()
         {
-            CoreServiceManager.OverlayUpdateAction += OnOverlayStatusUpdate;
+            //CoreServiceManager.OverlayUpdateAction += OnOverlayStatusUpdate;
         }
 
-        private void OnOverlayStatusUpdate(OverlayStatusUpdate osu)
+        /*private void OnOverlayStatusUpdate(OverlayStatusUpdate osu)
         {
             try
             {
@@ -36,11 +36,11 @@ namespace HRCounter.Data.DataSources
                 Logger.Critical($"Exception occured while handling YUR Mod Status Update: {e.Message}");
                 Logger.Critical(e);
             }
-        }
+        }*/
         
         protected override void Stop()
         {
-            CoreServiceManager.OverlayUpdateAction -= OnOverlayStatusUpdate;
+            //CoreServiceManager.OverlayUpdateAction -= OnOverlayStatusUpdate;
         }
     }
 }
